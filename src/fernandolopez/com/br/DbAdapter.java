@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DbAdapter {
 	public static final String KEY_ROWID = "_id";
@@ -18,9 +19,9 @@ public class DbAdapter {
 	
 	private static final String DB_NAME = "data";
 	private static final String DB_TABLE = "expenses";
-	private static final int DB_VERSION = 2;
+	private static final int DB_VERSION = 1;
 	
-	private SQLiteDatabase	mDB;
+	private SQLiteDatabase mDB;
 	private final Context mCtx;
 	
 	public DbAdapter(Context ctx) {
@@ -32,9 +33,10 @@ public class DbAdapter {
 		try {
 			mDB = mCtx.openOrCreateDatabase(DB_NAME, DB_VERSION, null);
 			mDB.execSQL(DB_CREATE);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new SQLException("Could not create database.");
+		} catch (SQLException e1) {
+//			e1.printStackTrace();
+//			throw new SQLException("Could not create database.");
+			Log.d("DB", "Database exist");
 		}
 		return this;
 	}
