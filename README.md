@@ -1,4 +1,7 @@
 expenses
 ========
 
-Aula básica devmedia
+Aula básica de android
+
+----------------------
+Sistema de despesas.
