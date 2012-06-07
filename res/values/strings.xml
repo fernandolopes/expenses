@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, ExpensesActivity!</string>
+    <string name="app_name">Pesornal Expenses</string>
+    <string name="no_expenses">There are no expenses yet.</string>
+    <string name="menu_insert">Add expenses</string>
+    <string name="menu_delete">Delete expenses</string>
+    <string name="desc">Description</string>
+    <string name="value">Value</string>
+    <string name="confirm">Confirm</string>
+
+</resources>
