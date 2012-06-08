@@ -1,6 +1,7 @@
 package fernandolopez.com.br;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,19 +16,12 @@ public class ExpenseEdit extends Activity {
 	private DbAdapter dbAdapter;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		Log.d("Add", "entrou");
-		super.onCreate(savedInstanceState);
+	protected void onCreate(Bundle icicle) {
+
+		super.onCreate(icicle);
 		
 		dbAdapter = new DbAdapter(this);
 		dbAdapter.open();
-	}
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
 		
 		setContentView(R.layout.expenses_edit);
 		
@@ -35,11 +29,14 @@ public class ExpenseEdit extends Activity {
 		valueText = (EditText) findViewById(R.id.value);
 		
 		Button confirmButton = (Button) findViewById(R.id.confirm);
-		rowId = outState != null ? outState.getLong(DbAdapter.KEY_ROWID) : null;
+		rowId = (icicle != null )? icicle.getLong(DbAdapter.KEY_ROWID) : null;
 		
-		if(outState == null){
+		if(rowId == null){
+			
 			Bundle extras = getIntent().getExtras();
-			rowId = extras != null ? extras.getLong(DbAdapter.KEY_ROWID) : null;
+			Log.d("Edit", "id "+extras.getLong(DbAdapter.KEY_ROWID));
+			rowId = (extras != null )? extras.getLong(DbAdapter.KEY_ROWID) : null;
+			
 		}
 		
 		populateFields();
@@ -51,11 +48,28 @@ public class ExpenseEdit extends Activity {
 				finish();
 			}
 		});
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
 		
 	}
 
 	private void populateFields() {
-		// TODO Auto-generated method stub
+		
+		if(rowId != null){
+			Cursor expense = dbAdapter.fetchExpense(rowId);
+			startManagingCursor(expense);
+//			String descricao = expense.getString(expense.getColumnIndex(DbAdapter.KEY_DESCRIPTION));
+//			float valor = expense.getFloat(expense.getColumnIndex(DbAdapter.KEY_VALUE));
+			String descricao = "teste";
+			float valor = 2;
+			
+			descText.setText(descricao);
+			valueText.setText(Float.toString(valor));
+		}
 		
 	}
 

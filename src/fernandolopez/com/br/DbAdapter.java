@@ -73,7 +73,9 @@ public class DbAdapter extends Activity {
 		Cursor result = mDB.query(true, DB_TABLE, new String[]{
 			  KEY_ROWID, KEY_DESCRIPTION, KEY_VALUE}, KEY_ROWID + "=" + rowid, 
 			  null, null, null, null, null);
-	  	if (result.getCount() == 0 || !result.isFirst()) {
+		int contador = result.getCount();
+		boolean resultado = result.isFirst();
+	  	if (contador == 0 || resultado) {
 	  		throw new SQLException ("N‹o h‡ despesa com id = " + rowid);
 	  	}
 	  	return result;
