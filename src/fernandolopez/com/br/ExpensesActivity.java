@@ -4,7 +4,6 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,8 +49,6 @@ public class ExpensesActivity extends ListActivity {
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		//Log para verificação do itemId
-		Log.d("MENU", Integer.toString(item.getItemId()));
 		
 		switch (item.getItemId()) {
 		case INSERT_ID:

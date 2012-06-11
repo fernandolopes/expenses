@@ -45,7 +45,6 @@ public class DbAdapter {
 	}
 	
 	public long createExpense(String desc, float value){
-		Log.d("SQL", "insert");
 		
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_DESCRIPTION,	desc);
@@ -60,14 +59,12 @@ public class DbAdapter {
 	
 	
 	public Cursor allExpense(){
-		  Log.d("SQL", "select all");
 
 		  return mDB.query(DB_TABLE, new String[] {KEY_ROWID, KEY_DESCRIPTION,
 		    KEY_VALUE}, null,null, null, null, null); 
 	}
 
 	public Cursor fetchExpense(long rowid) throws SQLException {
-		Log.d("SQL", "traz uma linha");
 		
 		Cursor result = mDB.query(true, DB_TABLE, new String[]{
 			  KEY_ROWID, KEY_DESCRIPTION, KEY_VALUE}, KEY_ROWID + "=" + rowid, 
