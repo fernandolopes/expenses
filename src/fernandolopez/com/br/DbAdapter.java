@@ -1,7 +1,7 @@
 package fernandolopez.com.br;
 
 import android.content.ContentValues;
-import android.content.Context;
+import android.content.Context; 
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -66,10 +66,13 @@ public class DbAdapter {
 
 	public Cursor fetchExpense(long rowid) throws SQLException {
 		
-		Cursor result = mDB.query(true, DB_TABLE, new String[]{
+		Cursor result = mDB.query(DB_TABLE, new String[]{
 			  KEY_ROWID, KEY_DESCRIPTION, KEY_VALUE}, KEY_ROWID + "=" + rowid, 
 			  null, null, null, null, null);
-	  	if (result.getCount() == 0 || !result.isFirst()) {
+		int contador = result.getCount();
+		
+		boolean resultado = result.moveToFirst();
+	  	if (contador == 0 || !resultado) {
 	  		throw new SQLException ("N‹o h‡ despesa com id = " + rowid);
 	  	}
 	  	return result;

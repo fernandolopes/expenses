@@ -16,10 +16,9 @@ public class ExpenseEdit extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle icicle) {
-		// TODO Auto-generated method stub
-		Log.d("Add", "entrou");
-		super.onCreate(icicle);
 
+		super.onCreate(icicle);
+		
 		dbAdapter = new DbAdapter(this);
 		dbAdapter.open();
 		
@@ -29,14 +28,13 @@ public class ExpenseEdit extends Activity {
 		valueText = (EditText) findViewById(R.id.value);
 		
 		Button confirmButton = (Button) findViewById(R.id.confirm);
-		
-		rowId = icicle != null ? icicle.getLong(DbAdapter.KEY_ROWID) : null;
+
+		rowId = (icicle != null )? icicle.getLong(DbAdapter.KEY_ROWID) : null;
 		
 		if(rowId == null){
 			
-			Bundle extras = getIntent().getExtras();
-			Log.d("ID",Long.toString(extras.getLong(DbAdapter.KEY_ROWID)));
-			rowId = extras != null ? extras.getLong(DbAdapter.KEY_ROWID) : null;
+			Bundle extras = getIntent() .getExtras();
+			rowId = (extras != null)? extras.getLong(DbAdapter.KEY_ROWID) : null;
 			
 		}
 		
@@ -59,14 +57,20 @@ public class ExpenseEdit extends Activity {
 	}
 
 	private void populateFields() {
-		// TODO Auto-generated method stub
-		if(rowId == null){
+		
+		if(rowId != null){
 			Cursor expense = dbAdapter.fetchExpense(rowId);
 			startManagingCursor(expense);
-			descText.setText(expense.getString(expense.getColumnIndex(DbAdapter.KEY_DESCRIPTION)));
 			
-			valueText.setText(expense.getString(expense.getColumnIndex(DbAdapter.KEY_VALUE)));
+			String descricao = expense.getString(expense.getColumnIndex(DbAdapter.KEY_DESCRIPTION));
+			float valor = expense.getFloat(expense.getColumnIndex(DbAdapter.KEY_VALUE));
+
+			
+			
+			descText.setText(descricao);
+			valueText.setText(Float.toString(valor));
 		}
+		
 	}
 
 	@Override
@@ -77,15 +81,17 @@ public class ExpenseEdit extends Activity {
 
 	private void saveState() {
 		String desc = descText.getText().toString();
-		float value = new Float(valueText.getText().toString());
 		
-		if(rowId == null){
-			long id = dbAdapter.createExpense(desc, value);
-			if(id > 0){
-				rowId = id;
+		if(desc.length() > 0){
+			float value = new Float(valueText.getText().toString());
+			if(rowId == null){
+				long id = dbAdapter.createExpense(desc, value);
+				if(id > 0){
+					rowId = id;
+				}
+			} else {
+				dbAdapter.updateExpense(rowId, desc, value);
 			}
-		} else {
-			dbAdapter.updateExpense(rowId, desc, value);
 		}
 	}
 
