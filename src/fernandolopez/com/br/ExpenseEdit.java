@@ -33,9 +33,8 @@ public class ExpenseEdit extends Activity {
 		
 		if(rowId == null){
 			
-			Bundle extras = getIntent().getExtras();
-			Log.d("Edit", "id "+extras.getLong(DbAdapter.KEY_ROWID));
-			rowId = (extras != null )? extras.getLong(DbAdapter.KEY_ROWID) : null;
+			Bundle extras = getIntent() .getExtras();
+			rowId = (extras != null)? extras.getLong(DbAdapter.KEY_ROWID) : null;
 			
 		}
 		
@@ -62,10 +61,11 @@ public class ExpenseEdit extends Activity {
 		if(rowId != null){
 			Cursor expense = dbAdapter.fetchExpense(rowId);
 			startManagingCursor(expense);
-//			String descricao = expense.getString(expense.getColumnIndex(DbAdapter.KEY_DESCRIPTION));
-//			float valor = expense.getFloat(expense.getColumnIndex(DbAdapter.KEY_VALUE));
-			String descricao = "teste";
-			float valor = 2;
+			
+			String descricao = expense.getString(expense.getColumnIndex(DbAdapter.KEY_DESCRIPTION));
+			float valor = expense.getFloat(expense.getColumnIndex(DbAdapter.KEY_VALUE));
+
+			
 			
 			descText.setText(descricao);
 			valueText.setText(Float.toString(valor));
@@ -81,15 +81,17 @@ public class ExpenseEdit extends Activity {
 
 	private void saveState() {
 		String desc = descText.getText().toString();
-		float value = new Float(valueText.getText().toString());
 		
-		if(rowId == null){
-			long id = dbAdapter.createExpense(desc, value);
-			if(id > 0){
-				rowId = id;
+		if(desc.length() > 0){
+			float value = new Float(valueText.getText().toString());
+			if(rowId == null){
+				long id = dbAdapter.createExpense(desc, value);
+				if(id > 0){
+					rowId = id;
+				}
+			} else {
+				dbAdapter.updateExpense(rowId, desc, value);
 			}
-		} else {
-			dbAdapter.updateExpense(rowId, desc, value);
 		}
 	}
 
