@@ -1,6 +1,5 @@
 package fernandolopez.com.br;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context; 
 import android.database.Cursor;
@@ -8,7 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class DbAdapter extends Activity {
+public class DbAdapter {
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_DESCRIPTION = "description";
 	public static final String KEY_VALUE = "value";

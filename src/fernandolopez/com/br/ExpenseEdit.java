@@ -29,6 +29,7 @@ public class ExpenseEdit extends Activity {
 		valueText = (EditText) findViewById(R.id.value);
 		
 		Button confirmButton = (Button) findViewById(R.id.confirm);
+
 		rowId = (icicle != null )? icicle.getLong(DbAdapter.KEY_ROWID) : null;
 		
 		if(rowId == null){
